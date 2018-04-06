@@ -1,0 +1,104 @@
+CREATE TABLE `member_details` (
+  `id` double NOT NULL AUTO_INCREMENT,
+  `title` varchar(4) NOT NULL,
+  `firstname` varchar(30) NOT NULL,
+  `familyname` varchar(25) NOT NULL,
+  `dob` date NOT NULL,
+  `gender` varchar(7) NOT NULL,
+  `houseno` int(3) DEFAULT NULL,
+  `streetname` varchar(30) DEFAULT NULL,
+  `country` varchar(30) DEFAULT NULL,
+  `postcode` varchar(10) DEFAULT NULL,
+  `mobileno` int(11) DEFAULT NULL,
+  `telephone` int(11) DEFAULT NULL,
+  `email` varchar(50) NOT NULL,
+  `username` varchar(15) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `date_joined` date NOT NULL,
+  `user_level_code` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`,`username`),
+  UNIQUE KEY `email` (`email`)
+);
+
+//********************************************************************
+CREATE TABLE `lib_book_categories` (
+`Category_ID`  int Not NULL AUTO_INCREMENT ,
+`Category_name`  varchar(50) NULL ,
+`Category_description`  varchar(100) NULL ,
+PRIMARY KEY (`Category_ID`)
+);
+
+//******************************************************************
+CREATE TABLE `lib_book_details` (
+`Book_item_code`  double NOT NULL ,
+`Title`  varchar(150) NULL ,
+`Authors`  varchar(300) NULL ,
+`Publisher`  varchar(150) NULL ,
+`Published_year`  int NULL ,
+`Edition`  varchar(20) NULL ,
+`ISBN`  varchar(20) NULL ,
+`ISSN`  varchar(20) NULL ,
+`Category_ID`  int NOT NULL ,
+`Price`  double NULL ,
+`ContainsCD`  varchar(5) NULL ,
+`Additional_info`  varchar(150) NULL ,
+PRIMARY KEY (`Book_item_code`, `Category_ID`),
+FOREIGN KEY (`Category_ID`) REFERENCES `lib_book_categories` (`Category_ID`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+//********************************************************************
+CREATE TABLE `lib_book` (
+`Book_ID`  int NOT NULL ,
+`Book_item_code`  double NOT NULL ,
+`Allow_status`  varchar(10) NULL ,
+`Additional_info`  varchar(30) NULL ,
+PRIMARY KEY (`Book_ID`),
+FOREIGN KEY (`Book_item_code`) REFERENCES `lib_book_details` (`Book_item_code`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+//********************************************************************
+CREATE TABLE `User_log` (
+`Log_ID`  int NOT NULL AUTO_INCREMENT ,
+`Member_ID`  double NOT NULL ,
+`Date`  date NULL ,
+`Time`  time NULL ,
+`IP_address`  varchar(20) NULL ,
+PRIMARY KEY (`Log_ID`),
+FOREIGN KEY (`Member_ID`) REFERENCES `member_details` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+//*********************************************************************
+CREATE TABLE `book_order_request` (
+`Order_ID`  int NOT NULL AUTO_INCREMENT ,
+`Book_item_code`  double NULL ,
+`Member_ID`  varchar(15) NULL ,
+`Order_date`  date NULL ,
+`Confirmation_date`  date NULL ,
+`Status`  varchar(30) NULL ,
+PRIMARY KEY (`Order_ID`),
+FOREIGN KEY (`Book_item_code`) REFERENCES `lib_book_details` (`Book_item_code`) ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY (`Member_ID`) REFERENCES `member_details` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+//********************************************************************
+CREATE TABLE `lib_reservation` (
+`Reservatiion_ID`  int NOT NULL AUTO_INCREMENT ,
+`Member_ID`  varchar(15) NULL ,
+`Book_item_code`  double NULL ,
+`Reservation_date`  date NULL ,
+`Expected_date`  date NULL ,
+PRIMARY KEY (`Reservatiion_ID`),
+FOREIGN KEY (`Member_ID`) REFERENCES `member_details` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY (`Book_item_code`) REFERENCES `lib_book_details` (`Book_item_code`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+//********************************************************************
+CREATE TABLE `lib_issue` (
+`Issue_ID`  int NOT NULL AUTO_INCREMENT ,
+`Book_ID`  int NOT NULL ,
+`Issued_date`  date NULL ,
+`Issued_by`  varchar(15) NULL ,
+`issued_for`  varchar(15) NULL ,
+`Expiry_date`  date NULL ,
+PRIMARY KEY (`Issue_ID`),
+FOREIGN KEY (`Book_ID`) REFERENCES `lib_book` (`Book_ID`) ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY (`Issued_by`) REFERENCES `member_details` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
+FOREIGN KEY (`issued_for`) REFERENCES `member_details` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+//********************************************************************
+

@@ -1,0 +1,55 @@
+<!--
+.mybox       { border: 1px solid #8C97A2; background-color: #F7FBFD }
+
+.mytextbox   { border: 1px solid #8C97A0; background-color: #FFFFFF; font-family:Tahoma; font-size:9pt }
+.box         { padding: -10px }
+.borderbox   { border: 1px solid #E2E2E2 }
+
+/* Links Text decoration to Remove underline marks*/
+
+a:link { color: #335577; text-decoration: none; }
+a:visited { color: #5f9119; text-decoration: none; }
+a:hover, a:active { color: #993333; }
+
+/* Navigation */
+.navigation
+{
+	float: left;
+	width: 100%;
+}
+
+.navigation ul
+{
+	margin: 0;
+	padding: 0;
+	float: left; 
+	width: 100%; 
+	list-style-type: none;
+	background-color: #FFFFFF;
+}
+
+.navigation li { float: left; margin: 0; padding: 0; }
+
+.navigation a:link,
+.navigation a:visited
+{
+	float: left;
+	display: block;
+	color: #DCE1E5;
+	background-color: #FFFFFF;padding-left:6px; padding-right:6px; padding-top:4px; padding-bottom:4px
+}
+
+.navigation a:hover,
+.navigation a:active
+{
+	color: #ffffff;
+	background-color: #7AC11C;
+}
+
+.navigation li#pagein a
+{
+	color: #f9f9f9;
+	background-color: #79BF1B;	
+}
+
+-->
